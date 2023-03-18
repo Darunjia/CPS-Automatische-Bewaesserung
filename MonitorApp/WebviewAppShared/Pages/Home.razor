@@ -1,0 +1,33 @@
+﻿@page "/"
+<div style="height:100vh">
+
+    <h1>This is the homepage.</h1>
+    <h2> And this is its title</h2>
+    <h3>There's also subtitles</h3>
+    <div style="display:flex;flex-direction:column;justify-content:space-evenly; width:80vw;">
+
+        <div>
+            <h3 style="color:white">Water Level</h3>
+            <div class="half-arc" style="--percentage:@(waterLevel)%;">
+                <span class="label">@(waterLevel)%</span>
+            </div>
+        </div>
+        <div>
+            <h3 style="color:white">Soil Humidity</h3>
+            <div class="half-arc" style="--percentage:@(humidity)%;">
+                <span class="label">@(humidity)%</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@code {
+    public int waterLevel = 25;
+    public int humidity = 25;
+
+    public void refresh()
+    {
+        Console.WriteLine("Refresh!");
+    }
+}

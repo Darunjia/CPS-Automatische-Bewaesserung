@@ -1,0 +1,12 @@
+.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: rgb(176,11,105);
+    background: linear-gradient(144deg, rgba(176,11,105,1) 0%, rgba(66,10,85,1) 35%, rgba(4,32,105,1) 100%);
+}
+
+.main {
+    flex: 1;
+}
