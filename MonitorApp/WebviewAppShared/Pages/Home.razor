@@ -1,7 +1,11 @@
 ﻿@page "/"
 @using System.Timers;
+@using BlazorWpfApp.Services;
+
+@inject ArduinoCommunicationService arduino
 
 @implements IDisposable
+
 
     <div class="gaugeContainer">
         <div>
@@ -36,9 +40,11 @@
 
     public void refreshData(Object source, ElapsedEventArgs e)
     {
-        Console.WriteLine("Refresh!");
-        waterLevel = 25;
-        humidity = 50;
+
+        var result = arduino.ReadSensors();
+        waterLevel = result[0];
+        humidity = result[1];
+
         InvokeAsync(StateHasChanged);
     }
 

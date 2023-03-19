@@ -11,7 +11,7 @@ namespace BlazorWpfApp.Services
     {
         SerialPort port;
 
-        public List<int> checkValues()
+        public List<int> ReadSensors()
         {
             if (port == null)
             {
@@ -37,6 +37,11 @@ namespace BlazorWpfApp.Services
 
             else
                 throw new Exception("Failed to open port");
+        }
+
+        public List<int> ReadSensorsMock()
+        {
+            return new List<int> { 25, 50};
         }
     }
 }
