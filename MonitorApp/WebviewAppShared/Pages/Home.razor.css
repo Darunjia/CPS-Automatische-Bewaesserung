@@ -2,12 +2,13 @@
     color:white;
 }
 
-
-html, body {
+.gaugeContainer {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 90vw;
+    height:100vh;
     align-items: center;
-    min-height: 100vh;
     font-size: 32px;
     gap: 40px;
 }
@@ -19,7 +20,7 @@ html, body {
     border-top-left-radius: 120px;
     border-top-right-radius: 120px;
     border-bottom: 0;
-    background: #d9d9d9;
+    background: #0094ff;
     box-sizing: border-box;
     overflow: hidden;
     display: flex;
@@ -36,7 +37,7 @@ html, body {
         width: 100%;
         height: 200%;
         border-radius: 50%;
-        background-image: conic-gradient(#9c27b0, #3f51b5 calc(var(--percentage, 0) / 2), #bbb 0);
+        background-image: conic-gradient(#ff6a00, #0094ff calc(var(--percentage, 0) / 2), #bbb 0);
         transition: transform .5s ease-in-out;
         z-index: 1;
         transform: rotate(270deg);
@@ -46,7 +47,9 @@ html, body {
         content: "";
         position: absolute;
         display: block;
-        background: #dddddd;
+        background: rgb(176,11,105);
+        background: linear-gradient(144deg, rgba(176,11,105,1) 0%, rgba(66,10,85,1) 35%, rgba(4,32,105,1) 100%);
+        background-attachment: fixed;
         z-index: 2;
         width: calc(100% - 32px);
         height: calc(200% - 32px);
@@ -56,7 +59,7 @@ html, body {
     }
 
     .half-arc span {
-        color: #673ab7;
+        color: white;
         z-index: 3;
         text-align: center;
     }
