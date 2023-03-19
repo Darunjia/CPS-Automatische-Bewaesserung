@@ -7,20 +7,20 @@
 @implements IDisposable
 
 
-    <div class="gaugeContainer">
-        <div>
-            <h3 style="color:white">Water Level</h3>
-            <div class="half-arc" style="--percentage:@(waterLevel)%;">
-                <span class="label">@(waterLevel)%</span>
-            </div>
-        </div>
-        <div>
-            <h3 style="color:white">Soil Humidity</h3>
-            <div class="half-arc" style="--percentage:@(humidity)%;">
-                <span class="label">@(humidity)%</span>
-            </div>
+<div class="gaugeContainer">
+    <div>
+        <h3 style="color:white">Water Level</h3>
+        <div class="half-arc" style="--percentage:@(waterLevel)%;">
+            <span class="label">@(waterLevel)%</span>
         </div>
     </div>
+    <div>
+        <h3 style="color:white">Soil Humidity</h3>
+        <div class="half-arc" style="--percentage:@(humidity)%;">
+            <span class="label">@(humidity)%</span>
+        </div>
+    </div>
+</div>
 
 @code {
     public int waterLevel = 50;
@@ -30,15 +30,21 @@
 
     protected override void OnInitialized()
     {
+        refreshData();
         // Create a timer with a two second interval.
-        timer = new System.Timers.Timer(15000);
+        timer = new System.Timers.Timer(30000);
         // Hook up the Elapsed event for the timer.
-        timer.Elapsed += refreshData;
+        timer.Elapsed += refreshDataEvent;
         timer.AutoReset = true;
         timer.Enabled = true;
     }
 
-    public void refreshData(Object source, ElapsedEventArgs e)
+    public void refreshDataEvent(Object source, ElapsedEventArgs e)
+    {
+        refreshData();
+    }
+
+    public void refreshData()
     {
 
         var result = arduino.ReadSensors();

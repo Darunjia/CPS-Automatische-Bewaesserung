@@ -3,8 +3,8 @@
 #include <Wire.h>
 
 //Water level pins
-const int trig = 1; //trigger pin
-const int echo = 2; 
+const int trig = 2; //trigger pin
+const int echo = 3; 
 
 //Humdity pins
 const int humditiyInput = A1;
@@ -13,7 +13,7 @@ const int humditiyInput = A1;
 const int slaveAddress = 8;
 
 WaterLevelController waterLevelController(trig, echo);
-SoilHumidityController soilHumidityController(humditiyInput);
+//SoilHumidityController soilHumidityController(humditiyInput);
 
 void setup()
 {
@@ -30,10 +30,10 @@ void loop()
 void requestEvent() {
 
     int waterLevel = waterLevelController.ReadWaterLevel();
-    int soilHumidity = soilHumidityController.ReadSoilHumidty();
-    int sensorValues[2];
-    sensorValues[0] = waterLevel;
-    sensorValues[1] = soilHumidity;
+    //int soilHumidity = soilHumidityController.ReadSoilHumidty();
 
-    Wire.write((uint8_t*)sensorValues, 2 * sizeof(int)); // Send the array
+      uint8_t buffer[2];
+  buffer[0] = waterLevel >> 8;
+  buffer[1] = waterLevel & 0xff;  
+  Wire.write(buffer, 2);
 }

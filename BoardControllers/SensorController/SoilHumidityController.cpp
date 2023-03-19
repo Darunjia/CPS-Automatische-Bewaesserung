@@ -11,7 +11,7 @@ SoilHumidityController::SoilHumidityController(int input) {
 
 int SoilHumidityController::ReadSoilHumidty()
 {
-	int sensorValue = analogRead(A0);
+	int sensorValue = analogRead(inputPin);
 
 	Serial.println("Soil Humidity: " + sensorValue); //debug
 

@@ -6,7 +6,6 @@
 
 class LEDController {
 private:
-	int inputPin;			// pin for the I2C 
 	int redLedPin;          // pin for the red LED
 	int greenLedPin;        // pin for the green LED
 	int yellowLedPin;       // pin for the yellow LED
@@ -15,9 +14,9 @@ private:
 	void lightGreen();
 
 public:
-	LEDController(int redPin, int greenPin, int yellowPin, int input);
+	LEDController(int redPin, int greenPin, int yellowPin);
 	void setWaterLevelLights(int waterLevel);
-	void flashWarning(int uptime_ms, int downtime_ms);
+	void flashWarning();
 };
 
 #endif

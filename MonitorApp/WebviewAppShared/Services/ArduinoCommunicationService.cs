@@ -15,7 +15,7 @@ namespace BlazorWpfApp.Services
         {
             if (port == null)
             {
-                port = new SerialPort("COM7", 9600);//Set your board COM
+                port = new SerialPort("COM4", 9600);//Set your board COM
                 port.Open();
             }
 

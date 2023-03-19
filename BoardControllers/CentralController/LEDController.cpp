@@ -3,7 +3,7 @@
 #include <Arduino.h>
 
 
-LEDController::LEDController(int redPin, int greenPin, int yellowPin, int input) {
+LEDController::LEDController(int redPin, int greenPin, int yellowPin) {
 	redLedPin = redPin;          // pin for the red LED
 	greenLedPin = greenPin;        // pin for the green LED
 	yellowLedPin = yellowPin;        // pin for the yellow LED
@@ -16,19 +16,21 @@ LEDController::LEDController(int redPin, int greenPin, int yellowPin, int input)
 
 void LEDController::setWaterLevelLights(int waterLevel)
 {
-	Serial.println("Water Level:");
-	Serial.println(waterLevel); // debug print
+	//Serial.println("Water Level: " + waterLevel);
 
 	if (waterLevel < 10)
 	{
+    //Serial.println("lighting red");
 		lightRed();
 	}
-	else if (waterLevel > 10 && waterLevel < 30)
+	else if (waterLevel >= 10 && waterLevel <= 30)
 	{
+    //Serial.println("lighting yellow");
 		lightYellow();
 	}
-	else
+	else if (waterLevel > 30)
 	{
+    //Serial.println("lighting green");
 		lightGreen();
 	}
 }
@@ -53,17 +55,17 @@ void LEDController::lightGreen() {
 	digitalWrite(greenLedPin, HIGH);
 }
 
-void LEDController::flashWarning(int uptime_ms, int downtime_ms) {
+void LEDController::flashWarning() {
 	digitalWrite(redLedPin, HIGH);
 	digitalWrite(yellowLedPin, HIGH);
 	digitalWrite(greenLedPin, HIGH);
 
-	delay(uptime_ms);
+	delay(1000);
 
 	digitalWrite(redLedPin, HIGH);
 	digitalWrite(yellowLedPin, HIGH);
 	digitalWrite(greenLedPin, HIGH);
 
-	delay(downtime_ms);
+	delay(1000);
 
 }
