@@ -1,27 +1,51 @@
 ﻿@page "/"
+@using System.Timers;
 
-<div class="gaugeContainer">
-    <div>
-        <h3 style="color:white">Water Level</h3>
-        <div class="half-arc" style="--percentage:@(waterLevel)%;">
-            <span class="label">@(waterLevel)%</span>
+@implements IDisposable
+
+    <div class="gaugeContainer">
+        <div>
+            <h3 style="color:white">Water Level</h3>
+            <div class="half-arc" style="--percentage:@(waterLevel)%;">
+                <span class="label">@(waterLevel)%</span>
+            </div>
+        </div>
+        <div>
+            <h3 style="color:white">Soil Humidity</h3>
+            <div class="half-arc" style="--percentage:@(humidity)%;">
+                <span class="label">@(humidity)%</span>
+            </div>
         </div>
     </div>
-    <div>
-        <h3 style="color:white">Soil Humidity</h3>
-        <div class="half-arc" style="--percentage:@(humidity)%;">
-            <span class="label">@(humidity)%</span>
-        </div>
-    </div>
-</div>
-
 
 @code {
-    public int waterLevel = 25;
+    public int waterLevel = 50;
     public int humidity = 25;
 
-    public void refresh()
+    private Timer timer;
+
+    protected override void OnInitialized()
+    {
+        // Create a timer with a two second interval.
+        timer = new System.Timers.Timer(15000);
+        // Hook up the Elapsed event for the timer.
+        timer.Elapsed += refreshData;
+        timer.AutoReset = true;
+        timer.Enabled = true;
+    }
+
+    public void refreshData(Object source, ElapsedEventArgs e)
     {
         Console.WriteLine("Refresh!");
+        waterLevel = 25;
+        humidity = 50;
+        InvokeAsync(StateHasChanged);
     }
+
+    public void Dispose()
+    {
+        timer?.Dispose();
+    }
+
+
 }
