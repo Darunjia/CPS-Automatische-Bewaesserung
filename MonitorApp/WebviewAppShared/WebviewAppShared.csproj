@@ -16,6 +16,10 @@
     <PackageReference Include="System.IO.Ports" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Library\Library.csproj" />
+  </ItemGroup>
+
   
   <ItemGroup>
     <SupportedPlatform Include="browser" />

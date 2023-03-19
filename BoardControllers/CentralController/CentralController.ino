@@ -45,7 +45,11 @@ void loop() {
 	//Serial.println(soilHumidity);
 
 	if (receiveVal == '1')
-		Serial.print(waterLevel + "#" + soilHumidity);
+	{
+		String waterLevelString = String(waterLevel);
+		String soilHumidityString = String(soilHumidity);
+		Serial.print(waterLevelString + "#" + soilHumidityString);
+	}
 
 	if (waterLevel != 0)
 		ledController.setWaterLevelLights(waterLevel);
