@@ -1,6 +1,8 @@
 #include <Wire.h>
 #include "LEDController.h"
 
+const int sensorAddress = 8; //I2C address of the sensor controller
+
 const int waterLevelInputPin = A1;	// pin for serial input (water level)
 const int redLedPin = 4;			// pin for the red LED
 const int greenLedPin = 3;			// pin for the green LED
@@ -10,11 +12,13 @@ const int humidityInputPin = A2;	//### Obsolete
 const int pumpPin = 7;				//5V pin for the water pump
 int pumpCoolDownCycles = 0;
 
+
 LEDController ledController(redLedPin, greenLedPin, yellowLedPin, waterLevelInputPin);
 
 
 void setup() {
 	Serial.begin(9600);
+	Wire.begin();
 
 	//Set up pump controller
 	pinMode(pumpPin, OUTPUT);
@@ -30,11 +34,14 @@ void loop() {
 		receiveVal = Serial.read();		
 	}
 
-	int waterLevel = 10; //### read from I2C
-	int humidity = 150; //### rad from I2C
+	int *sensorValues = readSensors();
+
+	//unfold array for easier readability
+	int waterLevel = sensorValues[0];
+	int soilHumidity = sensorValues[1];
 
 	if (receiveVal == '1')
-		Serial.print(waterLevel + "#" + humidity);
+		Serial.print(waterLevel + "#" + soilHumidity);
 
 	if (waterLevel != 0)
 		ledController.setWaterLevelLights(waterLevel);
@@ -44,7 +51,7 @@ void loop() {
 
 	//Only trigger pump once the cooldown period is over to give the soil time to properly humidify
 	if (pumpCoolDownCycles == 0)
-		controlPump(humidity);
+		controlPump(soilHumidity);
 	else
 		pumpCoolDownCycles--;
 
@@ -53,6 +60,17 @@ void loop() {
 	delay(1000);
 }
 
+int * readSensors()
+{
+	int arrayToReceive[2];
+	const int arrayLength = 2; //Define constant for easier expandability
+
+	Wire.requestFrom(sensorAddress, arrayLength * sizeof(int)); // Request the array
+	while (Wire.available() < arrayLength * sizeof(int)); // Wait until the data is available
+	Wire.readBytes((uint8_t*)arrayToReceive, arrayLength * sizeof(int)); // Read the data into the array
+
+	return arrayToReceive;	
+}
 
 // === Pump Controller ===
 //###sanitise humidity values
