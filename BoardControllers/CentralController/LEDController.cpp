@@ -18,17 +18,17 @@ void LEDController::setWaterLevelLights(int waterLevel)
 {
 	//Serial.println("Water Level: " + waterLevel);
 
-	if (waterLevel < 10)
+	if (waterLevel > 12)
 	{
     //Serial.println("lighting red");
 		lightRed();
 	}
-	else if (waterLevel >= 10 && waterLevel <= 30)
+	else if (waterLevel <= 12 && waterLevel >= 5)
 	{
     //Serial.println("lighting yellow");
 		lightYellow();
 	}
-	else if (waterLevel > 30)
+	else if (waterLevel < 5)
 	{
     //Serial.println("lighting green");
 		lightGreen();

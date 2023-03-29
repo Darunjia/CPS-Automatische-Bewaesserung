@@ -16,7 +16,19 @@ namespace BlazorWpfApp.Services
             if (port == null)
             {
                 port = new SerialPort("COM4", 9600);//Set your board COM
-                port.Open();
+                try
+                {
+                    port.Open();
+                }
+                catch (Exception)
+                {
+
+
+                }
+                if (!port.IsOpen)
+                {
+                    port = new SerialPort("COM5", 9600);//Set your board COM
+                }
             }
 
 
@@ -24,7 +36,7 @@ namespace BlazorWpfApp.Services
             {
 
                 port.Write("1"); //"1" is the signal that triggers a response from the board
-                string recieve = port.ReadExisting();            
+                string recieve = port.ReadExisting();
                 int waterLevel = 0;
                 int soilHumidity = 0;
                 try
@@ -47,7 +59,7 @@ namespace BlazorWpfApp.Services
 
             else
                 throw new Exception("Failed to open port");
-               // return new List<int> { 0, 0 };
+            // return new List<int> { 0, 0 };
         }
 
         public List<int> ReadSensorsMock()
